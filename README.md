@@ -1,8 +1,8 @@
 # TriSplit
 
-Three-column multitasking for the Galaxy Z Fold 7 (One UI 9 / Android 17).
+**The Galaxy Z Fold 8's three-way split screen, on the Z Fold 7 and other Folds that stop at two.**
 
-One UI on the Fold 7 splits the screen into two. TriSplit opens three apps side by side as pop-up (freeform) windows, tiled into columns, and keeps them behaving like one split screen: draggable dividers, swapping, rotation, the pop-up tray after going home, and hand-over to native split screen.
+The Galaxy Z Fold 8 can split its screen into three apps side by side. Older Folds such as the Z Fold 7 (One UI 9 / Android 17) only split into two. TriSplit brings three-way split to them: it opens three apps side by side as pop-up (freeform) windows, tiled into columns, and keeps them behaving like one split screen, with draggable dividers, swapping, rotation, the pop-up tray after going home, and hand-over to native split screen.
 
 > Unofficial and experimental. It relies on hidden Android and One UI behaviour through [Shizuku](https://shizuku.rikka.app/), so a system update can break it.
 
@@ -53,12 +53,18 @@ One UI on the Fold 7 splits the screen into two. TriSplit opens three apps side 
 - [Shizuku](https://shizuku.rikka.app/), started over wireless debugging. Shizuku has to be started again after each reboot.
 - The developer options "Enable freeform windows" and "Force activities to be resizable". TriSplit can switch these on.
 
+## Download
+
+Get the latest APK from [Releases](https://github.com/cx257k/TriSplit/releases), install it, and open TriSplit: a setup guide walks you through Shizuku and the permissions.
+
 ## Build and install
 
 ```bash
 ./gradlew assembleDebug
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
+
+For a signed release build, put `storeFile`, `storePassword`, `keyAlias` and `keyPassword` in `~/.trisplit/keystore.properties` (or point `TRISPLIT_KEYSTORE_PROPERTIES` at another file) and run `./gradlew assembleRelease`. Without that file the release build is unsigned.
 
 Then open TriSplit and allow:
 

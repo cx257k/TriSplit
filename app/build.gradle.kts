@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -14,6 +16,33 @@ android {
         // Bump on every AIDL change: Shizuku reuses a running user service with the same version.
         versionCode = 70
         versionName = "0.35.0"
+    }
+
+    // Release signing: the key lives outside the repository. Point TRISPLIT_KEYSTORE_PROPERTIES at a
+    // properties file (storeFile, storePassword, keyAlias, keyPassword); by default
+    // ~/.trisplit/keystore.properties. Without it, release builds are left unsigned.
+    val keystoreProperties = file(
+        System.getenv("TRISPLIT_KEYSTORE_PROPERTIES")
+            ?: "${System.getProperty("user.home")}/.trisplit/keystore.properties",
+    )
+    signingConfigs {
+        if (keystoreProperties.exists()) {
+            val props = Properties().apply { keystoreProperties.inputStream().use(::load) }
+            create("release") {
+                storeFile = file(props.getProperty("storeFile"))
+                storePassword = props.getProperty("storePassword")
+                keyAlias = props.getProperty("keyAlias")
+                keyPassword = props.getProperty("keyPassword")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            // No shrinking: the Shizuku service and the hidden-API reflection need their names intact.
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.findByName("release")
+        }
     }
 
     compileOptions {
