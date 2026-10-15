@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">TriSplit</string>
+    <string name="shortcut_launch_short">Tile 3 apps</string>
+    <string name="shortcut_launch_long">Open the saved 3 apps in three columns</string>
+
+    <!-- Main screen -->
+    <string name="apps_heading">Open now</string>
+    <string name="apps_hint">Tap a column to choose its app. Long-press or drag ≡ to move it.</string>
+    <string name="presets_hint">Tap to open. ✎ edit, ⋮ home screen or delete, drag ≡ to reorder.</string>
+    <string name="reorder_handle">Drag to reorder</string>
+    <string name="column_left">Left</string>
+    <string name="column_center">Center</string>
+    <string name="column_right">Right</string>
+    <string name="slot_not_selected">Not selected</string>
+    <string name="duplicate_switch">Open the same app in a separate window (supported apps only)</string>
+    <string name="mode_heading">Launch method</string>
+    <string name="mode_shizuku">Via Shizuku (recommended)</string>
+    <string name="mode_direct">Direct (no Shizuku, no divider handles)</string>
+    <string name="auto_open_switch">From split screen, open the three columns as soon as two apps are chosen</string>
+    <string name="gap_label">Gap between windows: %1$d px</string>
+    <string name="handles_heading">Divider handles</string>
+    <string name="close_others_switch">When one of the three goes full screen or split screen from its window menu, close the other two (Shizuku only)</string>
+    <string name="split_on_close_switch">When one of the three windows is closed, show the other two in split screen (Shizuku only)</string>
+    <string name="handles_switch">Show divider handles after launch (Shizuku only)</string>
+    <string name="handles_help">Drag a handle to resize the two windows next to it. Tap it for a button that swaps them; double-tap it for equal widths. Long-press it to hide the handles.</string>
+    <string name="overlay_permission_button">Allow \"Display over other apps\"</string>
+    <string name="launch_button">Launch in three columns</string>
+    <string name="log_freeform_setting">Freeform setting: %1$s</string>
+    <string name="log_launch_result">Column %1$d %2$s %3$s → %4$s</string>
+    <string name="error_message">Error: %1$s: %2$s</string>
+    <string name="cancel">Cancel</string>
+    <string name="pick_app_title">Choose an app</string>
+
+    <!-- Completing a native split screen into three columns -->
+    <string name="split_other_side_title">Choose the app for the other side</string>
+    <string name="complete_split_title">Make it three columns</string>
+    <string name="complete_split_help">Choose two apps to open with %1$s. Tap a column to change which one you are choosing.</string>
+    <string name="complete_split_slot">%1$s: %2$s</string>
+    <string name="complete_split_help_one">Choose one more app to open with %1$s and %2$s.</string>
+    <string name="complete_split_button">Open in three columns</string>
+
+    <!-- App drawer -->
+    <string name="drawer_search">Search apps</string>
+    <string name="drawer_favorite_hint">Long-press an app to add it to or remove it from favorites.</string>
+    <string name="drawer_favorites">Favorites</string>
+    <string name="drawer_recent">Recent</string>
+    <string name="drawer_all">All apps</string>
+    <string name="drawer_no_results">No matching apps</string>
+
+    <!-- Favorites card -->
+    <string name="favorites_heading">Favorite apps</string>
+    <string name="favorites_empty">No favorites yet.</string>
+    <string name="favorites_edit">Edit favorites</string>
+    <string name="favorites_done">Done</string>
+    <string name="drawer_favorite_edit_hint">Tap apps to add them to or remove them from favorites.</string>
+
+    <!-- Presets -->
+    <string name="presets_heading">Presets</string>
+    <string name="presets_empty">Create a preset to open three apps in one tap.</string>
+    <string name="presets_new">New preset</string>
+    <string name="presets_edit">Edit</string>
+    <string name="presets_edit_title">Edit preset</string>
+    <string name="presets_from_current">Use the apps chosen above</string>
+    <string name="presets_name_auto">Leave blank to use the app names</string>
+    <string name="presets_name">Preset name</string>
+    <string name="presets_save_confirm">Save</string>
+    <string name="presets_delete">Delete</string>
+    <string name="drawer_presets">Presets</string>
+    <string name="preset_choose_title">Choose %1$d apps from %2$s</string>
+    <string name="preset_choose_confirm">Use these</string>
+
+    <!-- Shizuku card -->
+    <string name="shizuku_not_running">Shizuku is not running. In the Shizuku app, tap Start under “Start via Wireless debugging”. After a restart of the phone, do this again.</string>
+    <string name="shizuku_no_permission">Connected, but permission is not granted.</string>
+    <string name="shizuku_request_permission">Request permission</string>
+    <string name="shizuku_unavailable">Shizuku is not running or permission is not granted</string>
+    <string name="enable_freeform">Enable freeform settings</string>
+    <string name="enable_freeform_help">Turns on the developer options \"Enable freeform windows\" and \"Force activities to be resizable\". A restart may be needed for them to take effect.</string>
+
+    <!-- Language card -->
+    <string name="language_heading">Language</string>
+    <string name="language_system">Follow system</string>
+    <!-- Each language is shown in its own name, whatever the current language. -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_japanese" translatable="false">日本語</string>
+    <string name="language_chinese_simplified" translatable="false">简体中文</string>
+    <string name="language_chinese_traditional" translatable="false">繁體中文</string>
+
+    <!-- Launcher shortcut -->
+    <string name="launch_need_apps">Choose three apps in TriSplit first</string>
+
+    <!-- Divider handles -->
+    <string name="handles_channel">Divider handles</string>
+    <string name="handles_notification_title">Showing divider handles</string>
+    <string name="handles_notification_text">Drag to resize, tap to swap, double-tap for equal widths.</string>
+    <string name="handles_close">Close</string>
+    <string name="swap_windows">Swap windows</string>
+    <string name="handles_closed">Divider handles closed</string>
+    <string name="handles_closed_screen_changed">The screen size changed, so the divider handles were closed</string>
+    <string name="handles_closed_no_shizuku">Can\'t connect to Shizuku, so the divider handles were closed</string>
+    <string name="handles_closed_native_split">Switched to split screen, so the divider handles were closed</string>
+    <string name="handles_closed_window_closed">A window was closed, so the divider handles were closed</string>
+    <string name="handles_not_resizable">Couldn\'t identify the windows, so divider handles are not shown</string>
+    <string name="handles_too_wide">These apps are too wide to fit side by side here, so some windows overlap. Rotating the screen may help.</string>
+    <string name="launch_not_windowed">%1$s can\'t be shown as a pop-up window</string>
+    <string name="handles_no_overlay_permission">\"Display over other apps\" is not allowed</string>
+    <string name="drawer_toggle_favorite">Add to or remove from favourites</string>
+    <string name="status_ready">Shizuku ready</string>
+    <string name="status_direct">Direct mode</string>
+    <string name="status_not_running">Shizuku stopped</string>
+    <string name="status_no_permission">Permission needed</string>
+    <string name="setup_heading">Before you start</string>
+    <string name="open_shizuku">Open Shizuku</string>
+    <string name="setup_freeform">Pop-up windows are not switched on yet. TriSplit needs them to place apps side by side.</string>
+    <string name="setup_overlay">To show the handles between windows, allow TriSplit to display over other apps.</string>
+    <string name="save_as_preset">Save as preset</string>
+    <string name="app_missing">Not installed</string>
+    <string name="preset_missing">Includes an app that is no longer installed</string>
+    <string name="preset_add_home">Add to home screen</string>
+    <string name="preset_more">More options</string>
+    <string name="preset_delete_title">Delete “%1$s”?</string>
+    <string name="preset_pin_unsupported">Your home screen app cannot add shortcuts</string>
+    <string name="preset_shortcut_deleted">This preset was deleted</string>
+    <string name="history_heading">Recently opened</string>
+    <string name="history_save">Save</string>
+    <string name="settings_heading">Settings</string>
+    <string name="log_show">Details</string>
+    <string name="log_hide">Hide</string>
+    <string name="launch_app_missing">%1$s is not installed</string>
+    <plurals name="launch_summary_ok">
+        <item quantity="one">Opened %1$d app</item>
+        <item quantity="other">Opened %1$d apps</item>
+    </plurals>
+    <plurals name="launch_summary_failed">
+        <item quantity="one">%1$d app could not be opened</item>
+        <item quantity="other">%1$d apps could not be opened</item>
+    </plurals>
+    <string name="handles_equalize">Equal widths</string>
+    <string name="handles_close_all">Close all</string>
+    <string name="preset_already_saved">These apps are already saved as a preset</string>
+    <string name="preset_saved">Saved as a preset: %1$s</string>
+    <string name="tile_label" translatable="false">TriSplit</string>
+    <string name="remember_widths_switch">Open apps at the widths they had last time</string>
+    <string name="add_tile_button">Add a Quick Settings tile</string>
+    <string name="add_tile_help">The tile opens the apps you opened last, from anywhere.</string>
+    <string name="add_tile_done">Tile added</string>
+    <string name="add_tile_already">The tile is already there</string>
+    <string name="duplicate_supported">The same app is in two columns; it opens a second window for itself.</string>
+    <string name="duplicate_warning_apps">%1$s is in more than one column but may not open a second window, in which case a column stays empty.</string>
+    <string name="front_screen_blocked">Three columns are not available on the front screen. Unfold the phone to use them; settings and presets can still be changed here.</string>
+    <string name="buried_popups">Pop-up windows behind the columns: tap one to bring it back</string>
+    <string name="complete_split_already_open">%1$s is already open on screen and cannot open a second window</string>
+    <string name="handles_same_window">%1$s cannot open a second window, so two columns share one window; divider handles are not shown</string>
+    <!-- Setup guide -->
+    <string name="onboarding_open">Setup guide and how to use</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_finish">Start using TriSplit</string>
+    <string name="onboarding_done">Done ✓</string>
+    <string name="onboarding_needs_shizuku">Start Shizuku first (previous steps).</string>
+    <string name="onboarding_welcome_title">Welcome to TriSplit</string>
+    <string name="onboarding_welcome_body">TriSplit opens three apps side by side in columns on your Fold, and keeps them working together like split screen: drag the dividers, swap apps, rotate the screen.</string>
+    <string name="onboarding_welcome_needs">It needs a few things set up once: the Shizuku app, pop-up windows, and two permissions. This guide takes you through each one; every step shows a tick when it is done.</string>
+    <string name="onboarding_shizuku_title">1. Shizuku</string>
+    <string name="onboarding_shizuku_body">Shizuku is a free app that lets TriSplit place and resize other apps\' windows. TriSplit cannot do this on its own; Shizuku gives it that access without rooting the phone.</string>
+    <string name="onboarding_shizuku_install">Shizuku is not installed yet. Install it first, then come back here.</string>
+    <string name="onboarding_shizuku_get">Get Shizuku</string>
+    <string name="onboarding_shizuku_step1">Turn on Developer options: Settings → About phone → Software information → tap \"Build number\" seven times.</string>
+    <string name="onboarding_shizuku_step2">Connect to Wi‑Fi, then in Developer options turn on \"Wireless debugging\".</string>
+    <string name="onboarding_shizuku_step3">First time only: in Shizuku, tap \"Pairing\" under \"Start via Wireless debugging\". In Wireless debugging, tap \"Pair device with pairing code\" and enter the six-digit code in Shizuku\'s notification.</string>
+    <string name="onboarding_shizuku_step4">In Shizuku, tap \"Start\". When you come back here, this step shows a tick.</string>
+    <string name="onboarding_open_developer_options">Open Developer options</string>
+    <string name="onboarding_shizuku_reboot">Shizuku stops when the phone restarts. Then open Shizuku and tap \"Start\" again (Wi‑Fi and Wireless debugging on); no new pairing is needed.</string>
+    <string name="onboarding_permission_title">2. Allow TriSplit in Shizuku</string>
+    <string name="onboarding_permission_body">Shizuku asks before giving any app access. Tap the button and choose \"Allow all the time\".</string>
+    <string name="onboarding_freeform_title">3. Pop-up windows</string>
+    <string name="onboarding_freeform_body">The three columns are pop-up windows, so the phone has to allow pop-up windows for every app. TriSplit switches the two needed developer options on for you.</string>
+    <string name="onboarding_overlay_title">4. Display over other apps</string>
+    <string name="onboarding_overlay_body">The handles between the columns are drawn over the apps. Find TriSplit in the list that opens and turn \"Allow permission\" on, then come back.</string>
+    <string name="onboarding_notifications_title">5. Notifications</string>
+    <string name="onboarding_notifications_body">While three apps are open, a notification keeps the handles running and offers Equal widths, Save as preset and Close all.</string>
+    <string name="onboarding_notifications_button">Allow notifications</string>
+    <string name="onboarding_handles_title">Using the handles</string>
+    <string name="onboarding_handles_body">Choose three apps on TriSplit\'s screen and tap \"Launch in three columns\". A handle sits between each pair of windows:</string>
+    <string name="onboarding_handles_drag">Drag it left or right to resize the two windows next to it together.</string>
+    <string name="onboarding_handles_tap">Tap it for a button that swaps those two apps.</string>
+    <string name="onboarding_handles_double_tap">Double-tap it to make the columns equal again.</string>
+    <string name="onboarding_handles_long_press">Long-press it to hide the handles.</string>
+    <string name="onboarding_more_title">More ways to use it</string>
+    <string name="onboarding_more_split">From split screen: open two apps with the Edge panel and pick TriSplit as one of them, then choose the rest; it becomes three columns. Apps already on screen stay.</string>
+    <string name="onboarding_more_home">Going home tucks the three windows into one pop-up icon. Tap any app in it and all three come back.</string>
+    <string name="onboarding_more_close">Close one window and the other two move to split screen.</string>
+    <string name="onboarding_more_presets">Save combinations as presets, add them to the home screen, or add the Quick Settings tile to reopen the last three apps.</string>
+    <string name="onboarding_more_front">On the front screen TriSplit only shows its settings; three columns need the main screen.</string>
+    <string name="onboarding_more_again">You can open this guide again from Settings at the bottom of TriSplit\'s screen.</string>
+    <string name="freeform_on">switched on</string>
+    <string name="freeform_failed">could not be switched on</string>
+    <string name="expand">Expand</string>
+    <string name="collapse">Collapse</string>
+</resources>

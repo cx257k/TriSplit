@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_launch_short">三列で起動</string>
+    <string name="shortcut_launch_long">保存した3アプリを三列で起動</string>
+
+    <!-- Main screen -->
+    <string name="apps_heading">今すぐ開く</string>
+    <string name="apps_hint">列をタップするとアプリを選べます。長押しか≡をドラッグすると移動できます。</string>
+    <string name="presets_hint">タップで開く。✎で編集、⋮でホーム画面に追加・削除、≡をドラッグで並べ替え。</string>
+    <string name="reorder_handle">ドラッグして並び替え</string>
+    <string name="column_left">左</string>
+    <string name="column_center">中央</string>
+    <string name="column_right">右</string>
+    <string name="slot_not_selected">未選択</string>
+    <string name="duplicate_switch">同じアプリを別ウィンドウで開く（対応アプリのみ）</string>
+    <string name="mode_heading">起動方法</string>
+    <string name="mode_shizuku">Shizuku経由（推奨）</string>
+    <string name="mode_direct">直接（Shizuku不要・境界ハンドルなし）</string>
+    <string name="auto_open_switch">二分割から使うとき、アプリを2つ選んだらすぐ三分割で開く</string>
+    <string name="gap_label">ウィンドウ間の隙間: %1$d px</string>
+    <string name="handles_heading">境界ハンドル</string>
+    <string name="close_others_switch">3つのうち1つをウィンドウのメニューから全画面や分割画面にしたら、残りの2つを閉じる（Shizuku経由のみ）</string>
+    <string name="split_on_close_switch">3つのうち1つを閉じたら、残りの2つを二分割で表示する（Shizuku経由のみ）</string>
+    <string name="handles_switch">起動後に境界ハンドルを表示（Shizuku経由のみ）</string>
+    <string name="handles_help">つまみを左右にドラッグすると、隣り合う2つのウィンドウの幅が一緒に変わります。タップで入れ替えボタン、ダブルタップで均等な幅、長押しでつまみを消します。</string>
+    <string name="overlay_permission_button">「他のアプリの上に重ねて表示」を許可</string>
+    <string name="launch_button">三列で起動</string>
+    <string name="log_freeform_setting">フリーフォーム設定: %1$s</string>
+    <string name="log_launch_result">%1$d列目 %2$s %3$s → %4$s</string>
+    <string name="error_message">エラー: %1$s: %2$s</string>
+    <string name="cancel">キャンセル</string>
+    <string name="pick_app_title">アプリを選択</string>
+
+    <!-- Completing a native split screen into three columns -->
+    <string name="split_other_side_title">反対側に表示するアプリを選択</string>
+    <string name="complete_split_title">三分割にする</string>
+    <string name="complete_split_help">%1$s と一緒に開くアプリを2つ選んでください。列をタップすると、選ぶ列を切り替えられます。</string>
+    <string name="complete_split_slot">%1$s: %2$s</string>
+    <string name="complete_split_help_one">%1$s と %2$s と一緒に開くアプリを、あと1つ選んでください。</string>
+    <string name="complete_split_button">三分割で開く</string>
+
+    <!-- App drawer -->
+    <string name="drawer_search">アプリを検索</string>
+    <string name="drawer_favorite_hint">アプリを長押しすると、お気に入りに追加・解除できます。</string>
+    <string name="drawer_favorites">お気に入り</string>
+    <string name="drawer_recent">最近使ったアプリ</string>
+    <string name="drawer_all">すべてのアプリ</string>
+    <string name="drawer_no_results">該当するアプリがありません</string>
+
+    <!-- Favorites card -->
+    <string name="favorites_heading">お気に入りのアプリ</string>
+    <string name="favorites_empty">まだありません。</string>
+    <string name="favorites_edit">お気に入りを編集</string>
+    <string name="favorites_done">完了</string>
+    <string name="drawer_favorite_edit_hint">アプリをタップすると、お気に入りに追加・解除できます。</string>
+
+    <!-- Presets -->
+    <string name="presets_heading">プリセット</string>
+    <string name="presets_empty">プリセットを作ると、3つのアプリをワンタップで開けます。</string>
+    <string name="presets_new">新しいプリセット</string>
+    <string name="presets_edit">編集</string>
+    <string name="presets_edit_title">プリセットを編集</string>
+    <string name="presets_from_current">上のアプリ欄から取り込む</string>
+    <string name="presets_name_auto">空欄ならアプリ名から付けます</string>
+    <string name="presets_name">プリセット名</string>
+    <string name="presets_save_confirm">保存</string>
+    <string name="presets_delete">削除</string>
+    <string name="drawer_presets">プリセット</string>
+    <string name="preset_choose_title">%2$s から%1$d個選んでください</string>
+    <string name="preset_choose_confirm">これにする</string>
+
+    <!-- Shizuku card -->
+    <string name="shizuku_not_running">Shizuku が止まっています。Shizuku アプリで「ワイヤレスデバッグ経由で起動」の「起動」を押してください。スマホを再起動したときも同じです。</string>
+    <string name="shizuku_no_permission">接続済み・権限がありません。</string>
+    <string name="shizuku_request_permission">権限をリクエスト</string>
+    <string name="shizuku_unavailable">Shizukuが起動していないか、権限がありません</string>
+    <string name="enable_freeform">フリーフォーム設定を有効化</string>
+    <string name="enable_freeform_help">開発者向けオプションの「フリーフォームウィンドウを有効化」「アクティビティをサイズ変更可能にする」をオンにします。反映に再起動が必要な場合があります。</string>
+
+    <!-- Language card -->
+    <string name="language_heading">言語</string>
+    <string name="language_system">端末の設定に従う</string>
+
+    <!-- Launcher shortcut -->
+    <string name="launch_need_apps">先にTriSplitで3つのアプリを選んでください</string>
+
+    <!-- Divider handles -->
+    <string name="handles_channel">境界ハンドル</string>
+    <string name="handles_notification_title">境界ハンドルを表示中</string>
+    <string name="handles_notification_text">ドラッグで幅を変更、タップで入れ替え、ダブルタップで均等にします。</string>
+    <string name="handles_close">閉じる</string>
+    <string name="swap_windows">ウィンドウを入れ替え</string>
+    <string name="handles_closed">境界ハンドルを閉じました</string>
+    <string name="handles_closed_screen_changed">画面サイズが変わったため、境界ハンドルを閉じました</string>
+    <string name="handles_closed_no_shizuku">Shizukuに接続できないため、境界ハンドルを閉じました</string>
+    <string name="handles_closed_native_split">分割画面に切り替えたため、境界ハンドルを閉じました</string>
+    <string name="handles_closed_window_closed">ウィンドウが閉じられたため、境界ハンドルを閉じました</string>
+    <string name="handles_not_resizable">ウィンドウを特定できなかったため、境界ハンドルは表示しません</string>
+    <string name="handles_too_wide">この3つのアプリは横に並べるには幅が足りないため、一部のウィンドウが重なります。画面を回転すると収まる場合があります。</string>
+    <string name="launch_not_windowed">%1$s はポップアップ表示に対応していません</string>
+    <string name="handles_no_overlay_permission">「他のアプリの上に重ねて表示」が許可されていません</string>
+    <string name="drawer_toggle_favorite">お気に入りに追加・解除</string>
+    <string name="status_ready">Shizuku 接続中</string>
+    <string name="status_direct">直接モード</string>
+    <string name="status_not_running">Shizuku 停止中</string>
+    <string name="status_no_permission">許可が必要</string>
+    <string name="setup_heading">使う前に</string>
+    <string name="open_shizuku">Shizuku を開く</string>
+    <string name="setup_freeform">ポップアップ表示がまだ有効になっていません。アプリを並べるのに必要です。</string>
+    <string name="setup_overlay">ウィンドウ間のつまみを表示するには、「他のアプリの上に重ねて表示」を許可してください。</string>
+    <string name="save_as_preset">プリセットに保存</string>
+    <string name="app_missing">インストールされていません</string>
+    <string name="preset_missing">インストールされていないアプリがあります</string>
+    <string name="preset_add_home">ホーム画面に追加</string>
+    <string name="preset_more">その他</string>
+    <string name="preset_delete_title">「%1$s」を削除しますか？</string>
+    <string name="preset_pin_unsupported">このホームアプリはショートカットを追加できません</string>
+    <string name="preset_shortcut_deleted">このプリセットは削除されました</string>
+    <string name="history_heading">最近開いた組み合わせ</string>
+    <string name="history_save">保存</string>
+    <string name="settings_heading">設定</string>
+    <string name="log_show">詳細</string>
+    <string name="log_hide">閉じる</string>
+    <string name="launch_app_missing">%1$s がインストールされていません</string>
+    <plurals name="launch_summary_ok">
+        <item quantity="other">%1$d個のアプリを開きました</item>
+    </plurals>
+    <plurals name="launch_summary_failed">
+        <item quantity="other">%1$d個は開けませんでした</item>
+    </plurals>
+    <string name="handles_equalize">均等にする</string>
+    <string name="handles_close_all">すべて閉じる</string>
+    <string name="preset_already_saved">この組み合わせはすでにプリセットにあります</string>
+    <string name="preset_saved">プリセットに保存しました: %1$s</string>
+    <string name="remember_widths_switch">前回の幅で開く</string>
+    <string name="add_tile_button">クイック設定にタイルを追加</string>
+    <string name="add_tile_help">タイルを押すと、最後に開いた組み合わせをどこからでも三列で開けます。</string>
+    <string name="add_tile_done">タイルを追加しました</string>
+    <string name="add_tile_already">タイルはすでに追加されています</string>
+    <string name="duplicate_supported">同じアプリが2つの列にあります。このアプリは別ウィンドウで開けます。</string>
+    <string name="duplicate_warning_apps">%1$s が複数の列にあります。このアプリは2つ目のウィンドウを開けない場合があり、そのときは列が1つ空きます。</string>
+    <string name="front_screen_blocked">フロント画面では三分割できません。端末を開いてメイン画面で使ってください（設定やプリセットの編集はここでもできます）。</string>
+    <string name="buried_popups">三列の後ろに隠れたポップアップ。タップで手前に戻します</string>
+    <string name="complete_split_already_open">%1$s はすでに画面に出ていて、2つ目のウィンドウを開けません</string>
+    <string name="handles_same_window">%1$s は2つ目のウィンドウを開けないため、2つの列が同じウィンドウになりました。つまみは表示しません</string>
+    <!-- Setup guide -->
+    <string name="onboarding_open">セットアップと使い方</string>
+    <string name="onboarding_back">戻る</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_finish">TriSplit を使い始める</string>
+    <string name="onboarding_done">完了 ✓</string>
+    <string name="onboarding_needs_shizuku">先に Shizuku を起動してください（前のステップ）。</string>
+    <string name="onboarding_welcome_title">TriSplit へようこそ</string>
+    <string name="onboarding_welcome_body">TriSplit は、Fold の画面に3つのアプリを横に並べて開き、分割画面のように一緒に扱えるようにするアプリです。境目のつまみで幅を変えたり、アプリを入れ替えたり、画面を回転したりできます。</string>
+    <string name="onboarding_welcome_needs">使うには、最初に一度だけ準備が必要です（Shizuku アプリ、ポップアップ表示、2つの許可）。このガイドで1つずつ進めます。終わったステップには「完了」が付きます。</string>
+    <string name="onboarding_shizuku_title">1. Shizuku</string>
+    <string name="onboarding_shizuku_body">Shizuku は、TriSplit が他のアプリのウィンドウを配置・リサイズするために使う無料アプリです。TriSplit だけではこの操作ができないため、Shizuku が root 化なしでその権限を渡します。</string>
+    <string name="onboarding_shizuku_install">Shizuku がまだ入っていません。先にインストールしてから、この画面に戻ってください。</string>
+    <string name="onboarding_shizuku_get">Shizuku を入手</string>
+    <string name="onboarding_shizuku_step1">開発者向けオプションをオンにする：設定 → 端末情報 → ソフトウェア情報 →「ビルド番号」を7回タップ。</string>
+    <string name="onboarding_shizuku_step2">Wi‑Fi につないでから、開発者向けオプションの「ワイヤレスデバッグ」をオンにする。</string>
+    <string name="onboarding_shizuku_step3">初回だけ：Shizuku で「ワイヤレスデバッグ経由で起動」の「ペアリング」を押す。ワイヤレスデバッグの画面で「ペアリングコードによるデバイスのペアリング」を押し、表示された6桁のコードを Shizuku の通知に入力する。</string>
+    <string name="onboarding_shizuku_step4">Shizuku で「起動」を押す。この画面に戻ると、このステップに「完了」が付きます。</string>
+    <string name="onboarding_open_developer_options">開発者向けオプションを開く</string>
+    <string name="onboarding_shizuku_reboot">スマホを再起動すると Shizuku は止まります。そのときは Wi‑Fi とワイヤレスデバッグをオンにして、Shizuku の「起動」をもう一度押してください（ペアリングは不要です）。</string>
+    <string name="onboarding_permission_title">2. Shizuku で TriSplit を許可</string>
+    <string name="onboarding_permission_body">Shizuku は、アプリに権限を渡す前に確認します。ボタンを押して「常に許可」を選んでください。</string>
+    <string name="onboarding_freeform_title">3. ポップアップ表示</string>
+    <string name="onboarding_freeform_body">3つの列はポップアップのウィンドウなので、どのアプリもポップアップで開けるようにする必要があります。必要な2つの開発者向けオプションを、TriSplit がオンにします。</string>
+    <string name="onboarding_overlay_title">4. 他のアプリの上に重ねて表示</string>
+    <string name="onboarding_overlay_body">列の境目のつまみは、アプリの上に重ねて表示します。開いた一覧で TriSplit を選び、「許可」をオンにして戻ってください。</string>
+    <string name="onboarding_notifications_title">5. 通知</string>
+    <string name="onboarding_notifications_body">3つのアプリを開いている間は、通知でつまみを動かし続けます。通知からは「均等にする」「プリセットに保存」「すべて閉じる」も使えます。</string>
+    <string name="onboarding_notifications_button">通知を許可</string>
+    <string name="onboarding_handles_title">つまみの使い方</string>
+    <string name="onboarding_handles_body">TriSplit の画面で3つのアプリを選び、「三列で起動」を押します。ウィンドウの境目につまみが出ます：</string>
+    <string name="onboarding_handles_drag">左右にドラッグすると、隣り合う2つのウィンドウの幅が一緒に変わります。</string>
+    <string name="onboarding_handles_tap">タップすると、その2つのアプリを入れ替えるボタンが出ます。</string>
+    <string name="onboarding_handles_double_tap">ダブルタップすると、列が均等な幅に戻ります。</string>
+    <string name="onboarding_handles_long_press">長押しすると、つまみを消します。</string>
+    <string name="onboarding_more_title">便利な使い方</string>
+    <string name="onboarding_more_split">分割画面から：エッジパネルで2つのアプリを分割して開くとき、片方に TriSplit を選び、残りのアプリを選ぶと三列になります。すでに画面にあるアプリはそのまま残ります。</string>
+    <string name="onboarding_more_home">ホームに戻ると、3つのウィンドウは1つのポップアップアイコンにまとまります。中のどれか1つを押すと、3つとも戻ります。</string>
+    <string name="onboarding_more_close">1つのウィンドウを閉じると、残りの2つが分割画面になります。</string>
+    <string name="onboarding_more_presets">組み合わせはプリセットとして保存でき、ホーム画面にも置けます。クイック設定のタイルを追加すると、最後に開いた3つをすぐ開けます。</string>
+    <string name="onboarding_more_front">フロント画面では設定だけ使えます。三列はメイン画面で使ってください。</string>
+    <string name="onboarding_more_again">このガイドは、TriSplit の画面下の「設定」からいつでも開き直せます。</string>
+    <string name="freeform_on">オンにしました</string>
+    <string name="freeform_failed">オンにできませんでした</string>
+    <string name="expand">開く</string>
+    <string name="collapse">閉じる</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:shortcutId="launch_triple"
+        android:shortcutLongLabel="@string/shortcut_launch_long"
+        android:shortcutShortLabel="@string/shortcut_launch_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="jp.trisplit.LaunchActivity"
+            android:targetPackage="jp.trisplit" />
+    </shortcut>
+</shortcuts>
