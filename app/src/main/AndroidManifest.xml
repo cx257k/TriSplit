@@ -66,6 +66,16 @@
             </intent-filter>
         </service>
 
+        <!-- App drawer opened over one column to change its app; see ColumnPickerActivity. -->
+        <activity
+            android:name=".ColumnPickerActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|density|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:taskAffinity="jp.trisplit.picker"
+            android:theme="@style/Theme.TriSplit.Backdrop" />
+
         <!-- Wallpaper backdrop behind the tiled windows; see BackdropActivity. -->
         <activity
             android:name=".BackdropActivity"

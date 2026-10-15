@@ -20,7 +20,7 @@
     <string name="close_others_switch">三个窗口之一通过窗口菜单切换为全屏或分屏时，关闭另外两个（仅 Shizuku）</string>
     <string name="split_on_close_switch">关闭三个窗口之一时，将另外两个以分屏显示（仅 Shizuku）</string>
     <string name="handles_switch">打开后显示分隔手柄（仅 Shizuku）</string>
-    <string name="handles_help">左右拖动手柄可同时调整相邻两个窗口的宽度。点按显示交换按钮，双击恢复等宽，长按隐藏手柄。</string>
+    <string name="handles_help">左右拖动手柄可同时调整相邻两个窗口的宽度。点按会出现“更换左侧应用·交换·更换右侧应用”按钮，双击恢复等宽，长按隐藏手柄。</string>
     <string name="overlay_permission_button">允许“显示在其他应用的上层”</string>
     <string name="launch_button">以三栏打开</string>
     <string name="log_freeform_setting">自由窗口设置：%1$s</string>
@@ -158,7 +158,7 @@
     <string name="onboarding_handles_title">手柄的用法</string>
     <string name="onboarding_handles_body">在 TriSplit 中选择三个应用，点按“以三栏打开”。每两个窗口之间都会出现手柄：</string>
     <string name="onboarding_handles_drag">左右拖动，可同时调整相邻两个窗口的宽度。</string>
-    <string name="onboarding_handles_tap">点按会出现交换这两个应用的按钮。</string>
+    <string name="onboarding_handles_tap">点按会出现按钮，可更换任一侧的应用，或交换这两个应用。</string>
     <string name="onboarding_handles_double_tap">双击可让各栏恢复等宽。</string>
     <string name="onboarding_handles_long_press">长按可隐藏手柄。</string>
     <string name="onboarding_more_title">更多用法</string>
@@ -172,4 +172,8 @@
     <string name="freeform_failed">无法开启</string>
     <string name="expand">展开</string>
     <string name="collapse">收起</string>
+    <string name="replace_column_button">更换“%1$s”栏的应用</string>
+    <string name="replace_column_title">选择要在“%1$s”栏显示的应用</string>
+    <string name="replace_failed">无法在此栏打开 %1$s</string>
+    <string name="onboarding_more_other_app">在三栏显示时从通知等打开其他应用，三个窗口会暂时收进弹出窗口托盘。在该应用中按返回键即可回到三栏。</string>
 </resources>

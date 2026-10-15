@@ -23,7 +23,7 @@
     <string name="close_others_switch">When one of the three goes full screen or split screen from its window menu, close the other two (Shizuku only)</string>
     <string name="split_on_close_switch">When one of the three windows is closed, show the other two in split screen (Shizuku only)</string>
     <string name="handles_switch">Show divider handles after launch (Shizuku only)</string>
-    <string name="handles_help">Drag a handle to resize the two windows next to it. Tap it for a button that swaps them; double-tap it for equal widths. Long-press it to hide the handles.</string>
+    <string name="handles_help">Drag a handle to resize the two windows next to it. Tap it for buttons that change the left app, swap the two, or change the right app; double-tap it for equal widths. Long-press it to hide the handles.</string>
     <string name="overlay_permission_button">Allow \"Display over other apps\"</string>
     <string name="launch_button">Launch in three columns</string>
     <string name="log_freeform_setting">Freeform setting: %1$s</string>
@@ -185,7 +185,7 @@
     <string name="onboarding_handles_title">Using the handles</string>
     <string name="onboarding_handles_body">Choose three apps on TriSplit\'s screen and tap \"Launch in three columns\". A handle sits between each pair of windows:</string>
     <string name="onboarding_handles_drag">Drag it left or right to resize the two windows next to it together.</string>
-    <string name="onboarding_handles_tap">Tap it for a button that swaps those two apps.</string>
+    <string name="onboarding_handles_tap">Tap it for buttons that change the app on either side, or swap the two.</string>
     <string name="onboarding_handles_double_tap">Double-tap it to make the columns equal again.</string>
     <string name="onboarding_handles_long_press">Long-press it to hide the handles.</string>
     <string name="onboarding_more_title">More ways to use it</string>
@@ -199,4 +199,8 @@
     <string name="freeform_failed">could not be switched on</string>
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
+    <string name="replace_column_button">Change the app in the %1$s column</string>
+    <string name="replace_column_title">Choose the app for the %1$s column</string>
+    <string name="replace_failed">%1$s could not be opened in this column</string>
+    <string name="onboarding_more_other_app">Open another app (from a notification, for example) and the three windows step aside into the pop-up tray. Press Back in that app to return to your three columns.</string>
 </resources>

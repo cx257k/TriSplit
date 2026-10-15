@@ -60,4 +60,10 @@ interface ISplitService {
 
     // Receives task changes as they happen; null stops them.
     void setTaskEvents(ITaskEvents listener) = 18;
+
+    // Takes a window out of the columns: full screen and behind everything, like an app left in recents.
+    String retireTask(int taskId) = 19;
+
+    // Minimises pop-up windows into One UI's pop-up tray, as going home does; returns how many went.
+    int minimizeTasks(in int[] taskIds) = 20;
 }

@@ -19,6 +19,7 @@ The Galaxy Z Fold 8 can split its screen into three apps side by side. Older Fol
 - **Rotation and the taskbar:** the columns are re-tiled when the screen rotates and when the taskbar appears or hides. Widths can be remembered per combination of apps.
 - **One UI integration:**
   - **Going home:** tapping one app in the pop-up tray restores all three windows.
+  - **Opening another app (e.g. from a notification):** One UI keeps pop-ups above full-screen apps, so TriSplit tucks the three windows into the pop-up tray to show it. Going back from that app brings the columns back; from home, one tap in the tray does.
   - **One window closed:** the other two move to native split screen.
   - **Full screen or split from a window menu:** making one window full screen or split screen closes the other two.
   - **Pop-ups opened over the columns:** they can be brought back with a chip when they end up behind the columns.

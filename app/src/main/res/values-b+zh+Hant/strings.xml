@@ -20,7 +20,7 @@
     <string name="close_others_switch">三個視窗之一從視窗選單切換為全螢幕或分割畫面時，關閉另外兩個（僅 Shizuku）</string>
     <string name="split_on_close_switch">關閉三個視窗之一時，將另外兩個以分割畫面顯示（僅 Shizuku）</string>
     <string name="handles_switch">開啟後顯示分隔把手（僅 Shizuku）</string>
-    <string name="handles_help">左右拖曳把手可同時調整相鄰兩個視窗的寬度。輕觸顯示交換按鈕，點兩下恢復等寬，長按隱藏把手。</string>
+    <string name="handles_help">左右拖曳把手可同時調整相鄰兩個視窗的寬度。輕觸會出現「更換左側應用程式・交換・更換右側應用程式」按鈕，點兩下恢復等寬，長按隱藏把手。</string>
     <string name="overlay_permission_button">允許「顯示在其他應用程式上層」</string>
     <string name="launch_button">以三欄開啟</string>
     <string name="log_freeform_setting">自由視窗設定：%1$s</string>
@@ -158,7 +158,7 @@
     <string name="onboarding_handles_title">把手的用法</string>
     <string name="onboarding_handles_body">在 TriSplit 中選擇三個應用程式，輕觸「以三欄開啟」。每兩個視窗之間都會出現把手：</string>
     <string name="onboarding_handles_drag">左右拖曳，可同時調整相鄰兩個視窗的寬度。</string>
-    <string name="onboarding_handles_tap">輕觸會出現交換這兩個應用程式的按鈕。</string>
+    <string name="onboarding_handles_tap">輕觸會出現按鈕，可更換任一側的應用程式，或交換這兩個應用程式。</string>
     <string name="onboarding_handles_double_tap">點兩下可讓各欄恢復等寬。</string>
     <string name="onboarding_handles_long_press">長按可隱藏把手。</string>
     <string name="onboarding_more_title">更多用法</string>
@@ -172,4 +172,8 @@
     <string name="freeform_failed">無法開啟</string>
     <string name="expand">展開</string>
     <string name="collapse">收合</string>
+    <string name="replace_column_button">更換「%1$s」欄的應用程式</string>
+    <string name="replace_column_title">選擇要在「%1$s」欄顯示的應用程式</string>
+    <string name="replace_failed">無法在此欄開啟 %1$s</string>
+    <string name="onboarding_more_other_app">在三欄顯示時從通知等開啟其他應用程式，三個視窗會暫時收進彈出式視窗匣。在該應用程式中按返回鍵即可回到三欄。</string>
 </resources>

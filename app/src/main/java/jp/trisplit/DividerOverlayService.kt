@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.ComponentCallbacks
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
@@ -129,6 +130,18 @@ class DividerOverlayService : Service() {
     private var buriedIds: List<Int> = emptyList()
     private var buriedChip: BuriedChipView? = null
 
+    /**
+     * The app that was opened over the columns (e.g. from a notification) and made TriSplit tuck
+     * them into the pop-up tray; when it is closed, the columns come back. See [pushAside].
+     */
+    private var pushedAsideBy: Int? = null
+
+    /** Home screen apps: the home screen is not "another app opened over the columns". */
+    private val homePackages by lazy {
+        packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0)
+            .map { it.activityInfo.packageName }.toSet()
+    }
+
     /** Consecutive polls in which only some of a hidden group were back; see [poll]. */
     private var partialPolls = 0
 
@@ -162,7 +175,11 @@ class DividerOverlayService : Service() {
     private var gestureGeneration = 0
 
     /** Swap button shown next to handle [swapButtonIndex] after a tap, or null. */
-    private var swapButton: SwapButtonView? = null
+    /** The menu shown by tapping a handle: change the left app, swap, change the right app. */
+    private var swapButton: View? = null
+
+    /** The column whose app is being changed in [ColumnPickerActivity]; polling waits meanwhile. */
+    private var replacing: Int? = null
     private var swapButtonIndex = -1
 
     /**
@@ -280,6 +297,10 @@ class DividerOverlayService : Service() {
     private fun onDisplayChanged() {
         val current = layout ?: return
         if (converting) return
+        if (replacing != null) {
+            ColumnPickerActivity.close()
+            replacing = null
+        }
         val display = windowManager.displayBounds()
         if (display == current.display) return
         val rotated = display.width == current.display.height && display.height == current.display.width
@@ -351,6 +372,7 @@ class DividerOverlayService : Service() {
 
     override fun onDestroy() {
         if (instance === this) instance = null
+        if (replacing != null) ColumnPickerActivity.close()
         // No handles means no tiled layout to stand behind, unless a newer instance took over.
         if (instance == null) BackdropActivity.dismiss()
         // TriSplit no longer manages any window; the pop-up fixer may act on all of them now, and
@@ -423,6 +445,9 @@ class DividerOverlayService : Service() {
         removeOverlays(keepVeil = wasCovering)
         // Whatever an earlier layout was in the middle of (its jobs were just cancelled) is over.
         launchPaused = false
+        pushedAsideBy = null
+        if (replacing != null) ColumnPickerActivity.close()
+        replacing = null
         dragging = false
         rotating = false
         converting = false
@@ -571,7 +596,7 @@ class DividerOverlayService : Service() {
 
     private suspend fun poll() {
         val current = layout ?: return
-        if (busy() || converting || launchPaused) return
+        if (busy() || converting || launchPaused || replacing != null) return
         val states = readStates() ?: return
         // A swap, drag or rotation may have changed the layout while the states were read.
         if (layout !== current || busy() || converting) return
@@ -628,6 +653,17 @@ class DividerOverlayService : Service() {
         val recents = recentsVisible()
         if (layout !== current || busy()) return
         val shownCount = states.count { it.visible && it.freeform }
+        if (!recents && shownCount == states.size) {
+            val visible = visibleTasks()
+            if (layout !== current) return
+            appOverColumns(current, visible)?.let { app ->
+                pushAside(current, app)
+                return
+            }
+        }
+        if (!recents && shownCount == 0 && pushedAsideBy != null) {
+            if (returnWhenClosed(current, states)) return
+        }
         if (!recents) {
             when {
                 // All windows gone from view: home (One UI minimises them into one pop-up icon),
@@ -640,6 +676,7 @@ class DividerOverlayService : Service() {
                 // Waits a poll, as "open all" in the tray brings them back one after another.
                 groupHidden && shownCount < states.size -> {
                     if (++partialPolls < CLOSED_CONFIRM_POLLS) return
+                    pushedAsideBy = null
                     groupHidden = false
                     partialPolls = 0
                     restoreGroup(current, states)
@@ -647,6 +684,7 @@ class DividerOverlayService : Service() {
                 }
                 // All came back together ("open all" in the tray): put the backdrop behind them again.
                 groupHidden && shownCount == states.size -> {
+                    pushedAsideBy = null
                     groupHidden = false
                     partialPolls = 0
                     restoreBackdrop(current)
@@ -935,15 +973,87 @@ class DividerOverlayService : Service() {
      */
     private fun onTasksChanged() {
         val current = layout ?: return
-        if (!handlesShown || busy() || converting || launchPaused || quickCheck?.isActive == true) return
+        if (!handlesShown || busy() || converting || launchPaused || replacing != null || quickCheck?.isActive == true) return
         quickCheck = scope.launch {
             val states = readStates() ?: return@launch
             if (layout !== current || !handlesShown) return@launch
             if (states.any { !it.visible } || recentsVisible()) {
                 setHandlesShown(false)
                 lastPolled = null
+                return@launch
+            }
+            // An app just opened behind the columns: move them aside now rather than at the next poll.
+            val visible = visibleTasks()
+            if (layout !== current) return@launch
+            appOverColumns(current, visible)?.let { pushAside(current, it) }
+        }
+    }
+
+    /**
+     * An app opened full screen (or in split screen) while the columns are on screen, e.g. from a
+     * notification. One UI keeps pop-up windows above it, so it is stuck behind the columns. It is
+     * recognised by sitting above the backdrop, which always stays right behind the columns.
+     */
+    private fun appOverColumns(current: Layout, visible: List<VisibleTask>): VisibleTask? {
+        val backdrop = BackdropActivity.taskId ?: return null
+        val backdropIndex = visible.indexOfFirst { it.taskId == backdrop }
+        if (backdropIndex < 0) return null
+        return visible.take(backdropIndex).firstOrNull { task ->
+            task.taskId !in current.taskIds &&
+                (task.windowingMode == WINDOWING_MODE_FULLSCREEN || task.windowingMode == VisibleTask.WINDOWING_MODE_MULTI_WINDOW) &&
+                task.component.isNotEmpty() && task.packageName !in homePackages
+        }
+    }
+
+    /** Tucks the columns into the pop-up tray so [app] can be used; see [returnWhenClosed]. */
+    private suspend fun pushAside(current: Layout, app: VisibleTask) {
+        // The quick check and the poll can both see it; the first one does it.
+        if (pushedAsideBy != null) return
+        pushedAsideBy = app.taskId
+        Log.i(TripleLauncher.TAG, "${app.packageName} opened over the columns: minimising them")
+        hideSwapButton()
+        setHandlesShown(false)
+        val minimized = runCatching {
+            val service = ShizukuBridge.service()
+            withContext(Dispatchers.IO) { service.minimizeTasks(current.taskIds.toIntArray()) }
+        }.getOrElse {
+            if (it is CancellationException) throw it
+            Log.w(TripleLauncher.TAG, "could not minimise the columns", it)
+            0
+        }
+        if (minimized == 0) {
+            pushedAsideBy = null
+            return
+        }
+        groupHidden = true
+        partialPolls = 0
+        lastPolled = null
+    }
+
+    /**
+     * After [pushAside]: once that app is closed (back) and the backdrop is the screen again, the
+     * columns come back by themselves. Going home instead leaves them in the pop-up tray, where one
+     * tap brings all three back. True if the columns were brought back.
+     */
+    private suspend fun returnWhenClosed(current: Layout, states: List<TaskState>): Boolean {
+        val visible = visibleTasks()
+        if (layout !== current) return false
+        val backdrop = BackdropActivity.taskId
+        val top = visible.firstOrNull { it.windowingMode != Freeform.WINDOWING_MODE_FREEFORM }
+        when {
+            top == null -> return false
+            // Home or another app: the user moved on; the tray brings the columns back.
+            top.taskId != backdrop -> {
+                if (top.packageName in homePackages || top.taskId != pushedAsideBy) pushedAsideBy = null
+                return false
             }
         }
+        Log.i(TripleLauncher.TAG, "the app opened over the columns was closed: bringing them back")
+        pushedAsideBy = null
+        groupHidden = false
+        partialPolls = 0
+        restoreGroup(current, states)
+        return true
     }
 
     private var quickCheck: Job? = null
@@ -1017,11 +1127,24 @@ class DividerOverlayService : Service() {
     private fun showSwapButton(index: Int) {
         val area = layout?.area ?: return
         hideSwapButton()
-        val view = SwapButtonView(windowContext).apply {
-            contentDescription = getString(R.string.swap_windows)
+        fun button(icon: MenuIcon, description: String, action: () -> Unit) = SwapButtonView(windowContext, icon).apply {
+            contentDescription = description
             setOnClickListener {
                 hideSwapButton()
-                swap(index)
+                action()
+            }
+        }
+        val size = (SWAP_BUTTON_DP * density).roundToInt()
+        val gap = (MENU_GAP_DP * density).roundToInt()
+        // One window for all three: separate windows would each take a tap on another as "outside".
+        val view = android.widget.LinearLayout(windowContext).apply {
+            orientation = android.widget.LinearLayout.HORIZONTAL
+            listOf(
+                button(MenuIcon.CHANGE_LEFT, getString(R.string.replace_column_button, columnName(index))) { startReplace(index) },
+                button(MenuIcon.SWAP, getString(R.string.swap_windows)) { swap(index) },
+                button(MenuIcon.CHANGE_RIGHT, getString(R.string.replace_column_button, columnName(index + 1))) { startReplace(index + 1) },
+            ).forEachIndexed { i, child ->
+                addView(child, android.widget.LinearLayout.LayoutParams(size, size).apply { if (i > 0) marginStart = gap })
             }
             setOnTouchListener { _, event ->
                 if (event.actionMasked == MotionEvent.ACTION_OUTSIDE) {
@@ -1051,11 +1174,90 @@ class DividerOverlayService : Service() {
     /** Centred on the divider, just above the handle; kept inside the area in either orientation. */
     private fun swapButtonParams(index: Int, area: Bounds): WindowManager.LayoutParams {
         val size = (SWAP_BUTTON_DP * density).roundToInt()
+        val width = size * 3 + (MENU_GAP_DP * density).roundToInt() * 2
         val spacing = (8 * density).roundToInt()
         val handleTop = area.top + (area.height - handleHeightPx) / 2
-        val x = (dividers[index] - size / 2).coerceIn(area.left, area.right - size)
+        val x = (dividers[index] - width / 2).coerceIn(area.left, area.right - width)
         val y = (handleTop - spacing - size).coerceAtLeast(area.top)
-        return overlayParams(x, y, size, size, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH)
+        return overlayParams(x, y, width, size, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH)
+    }
+
+    private fun columnName(column: Int) =
+        getString(listOf(R.string.column_left, R.string.column_center, R.string.column_right).getOrElse(column) { R.string.column_center })
+
+    /**
+     * Opens the app drawer over [column], so its app can be changed while the other two stay.
+     * Polling waits until the drawer reports back (see [onColumnPicked] / [onColumnPickCancelled]).
+     */
+    private fun startReplace(column: Int) {
+        val current = layout ?: return
+        if (rotating || converting || busy() || replacing != null) return
+        val slot = targetWindows().getOrNull(column) ?: return
+        replacing = column
+        val others = current.packages.filterIndexed { i, _ -> i != column }
+        if (!ColumnPickerActivity.open(this, column, slot, current.packages[column], others)) replacing = null
+    }
+
+    private fun columnPicked(column: Int, app: ComponentName) {
+        if (replacing != column) return
+        scope.launch {
+            try {
+                replaceColumn(column, app)
+            } finally {
+                replacing = null
+                lastPolled = null
+            }
+        }
+    }
+
+    /**
+     * Opens [app] in [column]'s place and takes the app that was there out of the columns (back to
+     * full screen, behind everything; it stays in recents). The handles then follow the new window.
+     */
+    private suspend fun replaceColumn(column: Int, app: ComponentName) {
+        val current = layout ?: return
+        val bounds = targetWindows().getOrNull(column) ?: return
+        val oldTask = current.taskIds[column]
+        val otherTasks = current.taskIds.filterIndexed { i, _ -> i != column }
+        // Another column already shows this app: it needs a window of its own (the drawer only
+        // offers that for apps that support it).
+        val multipleTask = current.packages.filterIndexed { i, _ -> i != column }.contains(app.packageName)
+        val newTask = IntArray(1)
+        val result = runCatching {
+            val service = ShizukuBridge.service()
+            withContext(Dispatchers.IO) {
+                service.startFreeform(
+                    app.flattenToString(), bounds.left, bounds.top, bounds.right, bounds.bottom,
+                    android.os.Process.myUid() / PER_USER_RANGE, multipleTask, newTask,
+                ).also { if (newTask[0] >= 0) service.resizeTask(newTask[0], bounds.left, bounds.top, bounds.right, bounds.bottom) }
+            }
+        }.getOrElse { if (it is CancellationException) throw it else "failed: $it" }
+        Log.i(TripleLauncher.TAG, "column ${column + 1} -> ${app.packageName}: $result (task=${newTask[0]})")
+        val id = newTask[0]
+        if (!result.startsWith(SplitService.OK_PREFIX) || id < 0 || id in otherTasks) {
+            Toast.makeText(this, getString(R.string.replace_failed, AppLabels.ofPackage(this, app.packageName)), Toast.LENGTH_LONG).show()
+            return
+        }
+        if (layout !== current || id == oldTask) return
+        val updated = current.copy(
+            taskIds = current.taskIds.mapIndexed { i, t -> if (i == column) id else t },
+            packages = current.packages.mapIndexed { i, p -> if (i == column) app.packageName else p },
+        )
+        layout = updated
+        limits = limits.mapIndexed { i, l -> if (i == column) WindowLimits(minColumnWidthPx) else l }
+        appliedColumns = appliedColumns.mapIndexed { i, b -> if (i == column) bounds else b }
+        veil?.apps = veilApps(updated.packages)
+        reportTiled()
+        runCatching {
+            val service = ShizukuBridge.service()
+            withContext(Dispatchers.IO) { Log.i(TripleLauncher.TAG, "old column window $oldTask: ${service.retireTask(oldTask)}") }
+        }.onFailure { if (it is CancellationException) throw it }
+        rememberWidths()
+        updated.packages.mapNotNull { packageManager.getLaunchIntentForPackage(it)?.component }
+            .takeIf { it.size == updated.packages.size }
+            ?.let { Prefs(this).recordHistory(it) }
+        verifyPending = true
+        retiled = false
     }
 
     /**
@@ -1445,7 +1647,9 @@ class DividerOverlayService : Service() {
         override fun performClick(): Boolean = super.performClick()
     }
 
-    private class SwapButtonView(context: Context) : View(context) {
+    private enum class MenuIcon { CHANGE_LEFT, SWAP, CHANGE_RIGHT }
+
+    private class SwapButtonView(context: Context, private val kind: MenuIcon = MenuIcon.SWAP) : View(context) {
         private val density = resources.displayMetrics.density
         private val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.argb(230, 32, 33, 36) }
         private val pressedFill = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.argb(240, 80, 82, 88) }
@@ -1473,6 +1677,10 @@ class DividerOverlayService : Service() {
             val radius = width / 2f - density
             canvas.drawCircle(cx, cy, radius, if (isPressed) pressedFill else fill)
             canvas.drawCircle(cx, cy, radius, outline)
+            if (kind != MenuIcon.SWAP) {
+                drawChange(canvas, cx, cy, pointsLeft = kind == MenuIcon.CHANGE_LEFT)
+                return
+            }
             val half = width * 0.22f
             val head = width * 0.09f
             val offset = height * 0.1f
@@ -1489,6 +1697,25 @@ class DividerOverlayService : Service() {
             path.moveTo(cx - half + head, cy + offset - head)
             path.lineTo(cx - half, cy + offset)
             path.lineTo(cx - half + head, cy + offset + head)
+            canvas.drawPath(path, icon)
+        }
+
+        /** A 2x2 app grid with a small arrow on the side of the column it changes. */
+        private fun drawChange(canvas: Canvas, cx: Float, cy: Float, pointsLeft: Boolean) {
+            val cell = width * 0.11f
+            val gap = width * 0.05f
+            val shift = if (pointsLeft) width * 0.07f else -width * 0.07f
+            for (row in 0..1) for (col in 0..1) {
+                val left = cx + shift - cell - gap / 2 + col * (cell + gap)
+                val top = cy - cell - gap / 2 + row * (cell + gap)
+                canvas.drawRoundRect(left, top, left + cell, top + cell, cell * 0.3f, cell * 0.3f, icon)
+            }
+            val tipX = if (pointsLeft) cx - width * 0.3f else cx + width * 0.3f
+            val backX = if (pointsLeft) tipX + width * 0.08f else tipX - width * 0.08f
+            path.reset()
+            path.moveTo(backX, cy - width * 0.08f)
+            path.lineTo(tipX, cy)
+            path.lineTo(backX, cy + width * 0.08f)
             canvas.drawPath(path, icon)
         }
 
@@ -1667,6 +1894,8 @@ class DividerOverlayService : Service() {
         private const val LONG_PRESS_MS = 700L
 
         private const val SWAP_BUTTON_DP = 44
+        private const val MENU_GAP_DP = 14
+        private const val PER_USER_RANGE = 100_000
         private const val SWAP_BUTTON_TIMEOUT_MS = 4_000L
 
         /** An outside touch this recent (any tap is shorter than a long press) on the same handle means the tap was meant to close the button. */
@@ -1735,6 +1964,19 @@ class DividerOverlayService : Service() {
             }
             runCatching { context.startForegroundService(intent) }
                 .onFailure { Log.w(TripleLauncher.TAG, "could not cover the screen", it) }
+        }
+
+        /** [ColumnPickerActivity] chose [app] for [column]. */
+        fun onColumnPicked(column: Int, app: ComponentName) {
+            instance?.columnPicked(column, app)
+        }
+
+        /** [ColumnPickerActivity] closed without a choice. */
+        fun onColumnPickCancelled() {
+            instance?.let {
+                it.replacing = null
+                it.lastPolled = null
+            }
         }
 
         /** Stops the current handles from reacting while a launch rearranges windows. */

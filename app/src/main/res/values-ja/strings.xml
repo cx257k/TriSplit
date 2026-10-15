@@ -22,7 +22,7 @@
     <string name="close_others_switch">3つのうち1つをウィンドウのメニューから全画面や分割画面にしたら、残りの2つを閉じる（Shizuku経由のみ）</string>
     <string name="split_on_close_switch">3つのうち1つを閉じたら、残りの2つを二分割で表示する（Shizuku経由のみ）</string>
     <string name="handles_switch">起動後に境界ハンドルを表示（Shizuku経由のみ）</string>
-    <string name="handles_help">つまみを左右にドラッグすると、隣り合う2つのウィンドウの幅が一緒に変わります。タップで入れ替えボタン、ダブルタップで均等な幅、長押しでつまみを消します。</string>
+    <string name="handles_help">つまみを左右にドラッグすると、隣り合う2つのウィンドウの幅が一緒に変わります。タップすると「左のアプリを変更・入れ替え・右のアプリを変更」のボタンが出ます。ダブルタップで均等な幅、長押しでつまみを消します。</string>
     <string name="overlay_permission_button">「他のアプリの上に重ねて表示」を許可</string>
     <string name="launch_button">三列で起動</string>
     <string name="log_freeform_setting">フリーフォーム設定: %1$s</string>
@@ -176,7 +176,7 @@
     <string name="onboarding_handles_title">つまみの使い方</string>
     <string name="onboarding_handles_body">TriSplit の画面で3つのアプリを選び、「三列で起動」を押します。ウィンドウの境目につまみが出ます：</string>
     <string name="onboarding_handles_drag">左右にドラッグすると、隣り合う2つのウィンドウの幅が一緒に変わります。</string>
-    <string name="onboarding_handles_tap">タップすると、その2つのアプリを入れ替えるボタンが出ます。</string>
+    <string name="onboarding_handles_tap">タップすると、左右どちらかのアプリを別のアプリに変えるボタンと、2つを入れ替えるボタンが出ます。</string>
     <string name="onboarding_handles_double_tap">ダブルタップすると、列が均等な幅に戻ります。</string>
     <string name="onboarding_handles_long_press">長押しすると、つまみを消します。</string>
     <string name="onboarding_more_title">便利な使い方</string>
@@ -190,4 +190,8 @@
     <string name="freeform_failed">オンにできませんでした</string>
     <string name="expand">開く</string>
     <string name="collapse">閉じる</string>
+    <string name="replace_column_button">%1$s の列のアプリを変更</string>
+    <string name="replace_column_title">%1$s の列に表示するアプリを選択</string>
+    <string name="replace_failed">%1$s をこの列に開けませんでした</string>
+    <string name="onboarding_more_other_app">三画面の表示中に通知などから別のアプリを開くと、3つのウィンドウはポップアップのトレイに一時的にしまわれます。そのアプリで戻るを押すと、三画面に戻ります。</string>
 </resources>

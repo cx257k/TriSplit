@@ -386,6 +386,34 @@ class SplitService : ISplitService.Stub() {
     @Volatile
     private var taskEvents: ITaskEvents? = null
 
+    /**
+     * One UI keeps pop-up windows above full-screen apps, so an app opened full screen (e.g. from a
+     * notification) would sit hidden behind the columns. Its own minimise (IMultiTaskingBinder,
+     * Samsung's multi-window service) puts them in the pop-up tray instead, as going home does.
+     */
+    override fun minimizeTasks(taskIds: IntArray): Int = binderSafe {
+        val binder = atm.javaClass.getMethod("getMultiTaskingBinder").invoke(atm) ?: error("no multi-tasking binder")
+        val minimize = binder.javaClass.getMethod("minimizeTaskById", Int::class.javaPrimitiveType)
+        taskIds.count { id ->
+            runCatching { minimize.invoke(binder, id) as Boolean }
+                .onFailure { Log.w(DAEMON_TAG, "minimizeTaskById($id) failed", it) }
+                .getOrDefault(false)
+        }
+    }
+
+    override fun retireTask(taskId: Int): String = runCatching {
+        applyToTask(taskId) { wct ->
+            wct.setWindowingMode(WINDOWING_MODE_FULLSCREEN)
+            wct.setBounds(Rect())
+            wct.reorder(toTop = false)
+        }
+        OK_PREFIX
+    }.getOrElse { t ->
+        val cause = (t as? InvocationTargetException)?.targetException ?: t
+        Log.w(DAEMON_TAG, "retireTask($taskId) failed", cause)
+        "retireTask failed: ${cause.javaClass.simpleName}: ${cause.message}"
+    }
+
     override fun setTaskEvents(listener: ITaskEvents?) {
         taskEvents = listener
         // Task changes are only heard once the listener is registered.

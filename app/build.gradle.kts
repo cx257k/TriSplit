@@ -14,8 +14,8 @@ android {
         minSdk = 31
         targetSdk = 36
         // Bump on every AIDL change: Shizuku reuses a running user service with the same version.
-        versionCode = 70
-        versionName = "0.35.0"
+        versionCode = 72
+        versionName = "0.37.0"
     }
 
     // Release signing: the key lives outside the repository. Point TRISPLIT_KEYSTORE_PROPERTIES at a

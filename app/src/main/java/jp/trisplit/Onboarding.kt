@@ -184,6 +184,7 @@ fun OnboardingScreen(state: SetupState, onRequestNotifications: () -> Unit, onFi
                             Bullets(
                                 R.string.onboarding_more_split,
                                 R.string.onboarding_more_home,
+                                R.string.onboarding_more_other_app,
                                 R.string.onboarding_more_close,
                                 R.string.onboarding_more_presets,
                                 R.string.onboarding_more_front,
